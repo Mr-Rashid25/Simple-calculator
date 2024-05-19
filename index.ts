@@ -1,24 +1,60 @@
 #! /usr/bin/env node
 import inquirer from "inquirer";
-const Answer = await inquirer.prompt([
-  { message: "Enter first number", type: "number", name: "firstNumber" },
-  { message: "Enter second number", type: "number", name: "secondNumber" },
-  {
-    message: "select one of the operator to perform operation",
-    type: "list",
-    name: "operator",
-    choices: ["Addition", "Subtraction", "Multiplication", "Division"],
+let loop = true; 
+while(loop){
+  
+  const userInput = await inquirer.prompt([
+    {
+      type:"number",
+      name:"num1",
+      message:"Enter your first number: ",
+    },{
+      type:"number",
+      name:"num2",
+      message:"Enter your second number: ",
+    },
+    {
+      type:"list",
+      name:"operator",
+      choices:["Addition","Subtraction","Multiplication","Division","Modulus","Exit"],
+      message:"Please select an operator."
     
-  },
-]);
-if(Answer.operator === "Addition"){
-  console.log( Answer.firstNumber + Answer.secondNumber);
-}else if(Answer.operator==="Subtraction"){
-  console.log( Answer.firstNumber - Answer.secondNumber)
-}else if(Answer.operator==="Multiplication"){
-  console.log( Answer.firstNumber * Answer.secondNumber)
-}else if(Answer.operator==="Division"){
-    console.log( Answer.firstNumber / Answer.secondNumber)}else{
-      console.log("plz select a valid operator");
-      
-    };                            
+    },
+  ]);
+  const num1 = userInput.num1;
+  const num2 = userInput.num2;
+  const operator = userInput.operator;
+  if (num1 && num2){
+    if(operator === "Addition")
+    {console.log(`\nThe sum of ${num1} + ${num2} = ${num1 + num2}` );
+  }else if(operator === "Subtraction"){
+    console.log(`\nThe answer of ${num1} - ${num2} = ${num1 - num2}`);
+    
+}
+  else if(operator === "Multiplication"){
+    console.log(`\nThe answer of ${num1} * ${num2} = ${num1 * num2}`);
+}else if(operator === "Division"){
+  console.log(`\nThe answer of ${num1} / ${num2} = ${num1 / num2}`);
+  }
+else if(operator === "Modulus"){  
+  console.log(`\nThe answer of ${num1} % ${num2} = ${num1 % num2}`);
+}else if(operator === "Exit"){ 
+  console.log('\nSuccessfully Exit.\nThank you! ');
+  loop = true
+  }
+}else{
+  console.log("Plz enter a valid number.");
+  
+}
+const calculateMore = await inquirer.prompt({
+  type:"confirm",
+  name:"more",
+  message:"Do you want more calculations?",
+  default:false
+});
+if(!calculateMore.more){
+  loop = false;
+  console.log("\nThank you !");
+  
+}
+}
